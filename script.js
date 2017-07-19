@@ -1,38 +1,42 @@
-let numSquares = 6;
+/*-----Globals to start game with initial values-----*/
+let numCircles = 6;
 let colors = [];
 let pickedColor;
-let squares = document.querySelectorAll(".square");
+
+/*-----Selectors to change elements on DOM-----*/
+let circles = document.querySelectorAll(".square");
 let colorDisplay = document.getElementById('colorDisplay');
 let messageDisplay = document.querySelector('#message');
 let h1 = document.querySelector('h1');
 let resetButton = document.querySelector('#reset');
 let modeButtons = document.querySelectorAll('.mode');
 
+/*-----Initialize Game-----*/
 init();
 
 function init(){
     setupModeButtons();
-    setupSquares();
+    setupcircles();
     reset();
 }
 
+/*-----Function to apply handlers to easy and hard mode buttons-----*/
 function setupModeButtons(){
     for(let i = 0; i < modeButtons.length; i++){
         modeButtons[i].addEventListener('click', function(){
             modeButtons[0].classList.remove('selected');
             modeButtons[1].classList.remove('selected');
             this.classList.add('selected');
-            this.textContent === 'Easy' ? numSquares = 3: numSquares = 6;
+            this.textContent === 'Easy' ? numCircles = 3: numCircles = 6;
             reset();
         })
     }
 }
 
-function setupSquares(){
-    for(let i = 0; i < squares.length; i++){
-        //add click listeners to squares
-        squares[i].addEventListener('click', function() {
-            //grab color of clicked square
+/*----Function to apply click handler onto each square in game area----*/
+function setupcircles(){
+    for(let i = 0; i < circles.length; i++){
+        circles[i].addEventListener('click', function() {
             let clickedColor = this.style.background;
             if (clickedColor === pickedColor) {
                 messageDisplay.textContent = 'Correct';
@@ -47,58 +51,56 @@ function setupSquares(){
     }
 }
 
+/*----Resets colors, picks a color from color array, sets colors to circles----*/
 function reset(){
-    //generate all new colors
-    colors = generateRandomColors(numSquares);
+    colors = generateRandomColors(numCircles);
     pickedColor = pickColor();
-    //change color display to match picked color
     colorDisplay.textContent = pickedColor;
     resetButton.textContent = 'New Colors';
     messageDisplay.textContent = '';
-    //change colors of squares
-    for(let i = 0; i < squares.length; i++){
+    //change colors of circles
+    for(let i = 0; i < circles.length; i++){
         if(colors[i]){
-            squares[i].style.display = 'block';
-            squares[i].style.background = colors[i];
+            circles[i].style.display = 'block';
+            circles[i].style.background = colors[i];
         } else {
-            squares[i].style.display = 'none';
+            circles[i].style.display = 'none';
         }
     }
     h1.style.background = 'steelblue';
 }
 
+/*-----Click Handler for reset button-----*/
 resetButton.addEventListener('click', function(){
     reset();
 });
 
+/*----Sets correct colors to each circle----*/
 function changeColors(color){
-    //loop thorugh all squares
-    for(let i = 0; i < squares.length; i++){
-        //change each color to match given color
-        squares[i].style.background = color;
+    for(let i = 0; i < circles.length; i++){
+        circles[i].style.background = color;
     }
 }
 
+/*----Picks random color from colors array----*/
 function pickColor(){
     let random = Math.floor(Math.random() * colors.length);
     return colors[random];
 }
 
+/*----Generates either 6 or 3 colors based on difficulty selected----*/
 function generateRandomColors(num){
     let arr = [];
     for(let i = 0; i < num; i++) {
         arr.push(randomColor())
     }
     return arr;
-
 }
 
+/*----Picks 3 random colors (r, g, b)----*/
 function randomColor(){
     let r = Math.floor(Math.random() * 256);
-
     let g = Math.floor(Math.random() * 256);
-
     let b = Math.floor(Math.random() * 256);
-
     return "rgb(" + r + ", " + g + ", " + b + ")";
 }
