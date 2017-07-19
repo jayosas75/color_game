@@ -51,7 +51,7 @@ h1 {
     font-size: 200%;
 }
  
- button {
+button {
     border: none;
     background: none;
     text-transform: uppercase;
@@ -64,14 +64,15 @@ h1 {
     --webkit-transition: all 0.3s;
     --moz-transition: all 0.3s;
     outline: none;
- }
+}
 
- button:hover {
+button:hover {
     color: white;
     background: steelblue;
- }
+}
 
- #message {
+#message {
     width: 20%;
     display: inline-block;
- }
+    font-weight: 500;
+}
